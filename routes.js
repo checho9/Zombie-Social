@@ -60,6 +60,45 @@ router.get("/zombies/:username",(req,res,next)=>{
         res.render("profile",{zombie:zombie});
     });
 });
+router.get("/login",(req,res)=>{
+    res.render("login");
+})
+router.post("/login", passport.authenticate("login",{
+    successRedirect: "/",
+    failureRedirect:"/login",
+    failureFlash: true
+}));
+
+router.get("/logout",(req, res)=>{
+    req.logout();
+    res.redirect("/");
+});
+
+router.get("/edit",ensureAuthenticated,(req, res)=>{
+    res.render("edit");
+});
+
+router.post("/edit",ensureAuthenticated, (req, res, next)=>{
+    req.zombie.displayName = req.body.displayName;
+    req.zombie.bio = req.body.bio;
+    req.zombie.save((err) =>{
+        if(err){
+            next(err);
+            return;
+        }
+        req.flash("info","Perfil actualizado!");
+        res.redirect("/edit");
+    });
+});
+
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        next();
+    } else {
+        req.flash("info","Necesitas iniciar sesion para poder ver esta sección");
+        res.redirect("/login");
+    }
+}
 
 router.get("/re-weapons",(req,res)=>{
     res.render("re-weapons");

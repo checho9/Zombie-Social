@@ -8,9 +8,14 @@
  var flash = require("connect-flash");
 
  var routes = require("./routes");
+ var passportsetup = require("./passportsetup");
  var app = express();
+ var passport = require("passport");
 
  mongoose.connect("mongodb://localhost:27017/zombie-social");
+
+ passportsetup();
+
  app.set("port",process.env.PORT || 3000);
 
  app.set("views", path.resolve(__dirname,"views"));
@@ -25,6 +30,11 @@ app.use(session({
 }));
 
 app.use(flash());
+
+app.use(passport.initialize({
+   userProperty: "zombie" 
+}));
+app.use(passport.session());
 app.use(routes);
 
 app.listen(app.get("port"),()=>{
