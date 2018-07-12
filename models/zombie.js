@@ -8,6 +8,7 @@ var zombieSchema = mongoose.Schema({
     password:{type:String,required:true},
     createdAt:{type:Date,default:Date.now},
     displayName:{type:String},
+    role:{type:String},
     bio:String
 });
 
@@ -38,6 +39,10 @@ zombieSchema.methods.checkPassword = function (guess, done) {
     bcrypt.compare(guess,this.password, function (err, isMatch){
         done(err,isMatch);
     });
+}
+
+zombieSchema.methods.rol = function(){
+    return this.role;
 }
 
 zombieSchema.methods.name = function(){

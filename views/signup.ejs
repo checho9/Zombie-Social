@@ -1,4 +1,4 @@
-<% include _header%>
+<% include _header %>
 
 <h1>Registro</h1>
 
@@ -11,9 +11,16 @@
         <input name="password" type="password" class="form-control"
         placeholder="Contraseña" required/>
     </div>
+    <a class="form-group">Rol</a>
+    <select name="role" class="form-group">
+        <option value="zombie-king">zombie-king</option>
+        <option value="zombie-queen">zombie-queen</option>
+        <option value="zombie-boss">zombie-boss</option>
+        <option value="zombie">zombie</option>
+    </select>
     <input type="submit" value="Registrarse"
      class="btn btn-primary btn-block"/>
     
 </form>
 
-<% include _footer%>
+<% include _footer %>
